@@ -33,7 +33,7 @@ class Database {
   * SQL Injection proof
   * USAGE EXAMPLE: $db->query("select * from users where id = :p1");
   *                $db->bind(":p1", "4");
-  *                $utils->debug($db->execute());
+  *                $db->execute();
   */
   public function query($statement) {
 
@@ -52,8 +52,8 @@ class Database {
 
   /*
   * Used to execute query
-  * USAGE EXAMPLE: $result = $db->plainQuery("select * from users");
-                   $utils->debug($result);
+  * USAGE EXAMPLE: $result = $db->query("select * from users")
+  *                             ->execute();
   */
    public function execute() {
     // execute query
@@ -71,8 +71,9 @@ class Database {
 
   /*
   * Return result as a array of objects
-  * USAGE EXAMPLE: $result = $db->query("select * from users")->execute()->result();
-                   $utils->debug($result);
+  * USAGE EXAMPLE: $result = $db->query("select * from users")
+  *                             ->execute()
+  *                             ->result();
   */
   public function result() {
     // parse all rows in res
@@ -87,8 +88,9 @@ class Database {
 
   /*
   * Return first row as an obj
-  * USAGE EXAMPLE: $result = $db->query("select * from users")->execute()->result();
-                   $utils->debug($result);
+  * USAGE EXAMPLE: $result = $db->query("select * from users")
+  *                             ->execute()
+  *                             ->result();
   */
   public function firstResult() {
     return oci_fetch_object($this->stid);
@@ -99,7 +101,7 @@ class Database {
   * Used to bind parameters
   * USAGE EXAMPLE The same as oci_bind_by_name, it just ads chaining capability
   *               $db->query("select * from users where user_id = :p1 ");
-  *               db->bind(":p1", "4");
+  *               $db->bind(":p1", "4");
   *               $db->execute();
   */
   public function bind($bv_name, &$variable, ...$params) {
